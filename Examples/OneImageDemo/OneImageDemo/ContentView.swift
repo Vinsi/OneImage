@@ -1,5 +1,5 @@
+import OneImageView
 import SwiftUI
-import View
 
 struct ContentView: View {
     var body: some View {

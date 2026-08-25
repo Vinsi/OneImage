@@ -5,8 +5,8 @@
 //  Created by Vinsi on 23.8.26.
 //
 
+import OneImageView
 import SwiftUI
-import View
 
 private struct PreviewRow<Content: View>: View {
     let title: String

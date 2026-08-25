@@ -20,9 +20,9 @@ targets:
           - Info.plist
     dependencies:
       - package: OneImage
-        product: Core
+        product: OneImageCore
       - package: OneImage
-        product: View
+        product: OneImageView
       - package: Kingfisher
         product: Kingfisher
     info:

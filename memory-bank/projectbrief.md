@@ -5,9 +5,9 @@ A SwiftUI image loading library for local and remote images, distributed as a Sw
 
 ## Goals
 - Provide a single declarative `ImageView` that renders both local images (assets, system symbols, resources) and remote images (URLs) through one API.
-- Keep the image *model* (`Core`) platform-independent and UI-free so it can be reused outside SwiftUI.
+- Keep the image *model* (`OneImageCore`) platform-independent and UI-free so it can be reused outside SwiftUI.
 - Abstract remote loading behind a rendering protocol so the library is not hard-coupled to a single network image loader.
-- Ship as reusable SPM products (`Core`, `View`) plus a sample app (`OneImageSample`, `OneImageSampleUI`).
+- Ship as reusable SPM products (`OneImageCore`, `OneImageView`) plus a sample app (`OneImageSample`, `OneImageSampleUI`).
 
 ## Requirements
 - Swift 6.1+

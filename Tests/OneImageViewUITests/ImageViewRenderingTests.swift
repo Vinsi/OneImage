@@ -1,7 +1,7 @@
 import SwiftUI
 import Testing
 
-@testable import View
+@testable import OneImageView
 
 @MainActor
 struct ImageViewRenderingTests {

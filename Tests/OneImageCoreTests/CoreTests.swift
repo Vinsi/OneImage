@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Core
+@testable import OneImageCore
 
 @Test func assetBundleDefaultsToMain() {
     let source = ImageReference.LocalSource.asset("logo")

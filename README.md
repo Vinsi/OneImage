@@ -37,7 +37,7 @@ Swap a local asset for a remote URL (feature flag, A/B test, CDN migration) by c
 | **Plug your own loader** | Bring Kingfisher, Nuke, or anything else via the `RemoteImageRenderer` protocol |
 | **First-class placeholders** | Loading and failure states are enforced at compile time through type-state generics |
 | **Consistent styling** | `.resizable()`, `.renderingMode()`, `.interpolation()`, `.antialiased()` behave identically for local and remote |
-| **Platform-independent core** | The `Core` module carries no SwiftUI dependency |
+| **Platform-independent core** | The `OneImageCore` module carries no SwiftUI dependency |
 
 ## Installation
 
@@ -52,20 +52,20 @@ dependencies: [
 Then add the products you need:
 
 ```swift
-.product(name: "Core", package: "OneImage"),
-.product(name: "View", package: "OneImage"),
+.product(name: "OneImageCore", package: "OneImage"),
+.product(name: "OneImageView", package: "OneImage"),
 ```
 
 | Product | Description |
 | --- | --- |
-| `Core` | Platform-independent image reference model |
-| `View` | SwiftUI `ImageView` with placeholders, styling, and renderer injection |
+| `OneImageCore` | Platform-independent image reference model |
+| `OneImageView` | SwiftUI `ImageView` with placeholders, styling, and renderer injection |
 | `OneImageSampleUI` / `OneImageSample` | Sample app with canvas previews |
 
 ## Quick Start
 
 ```swift
-import View
+import OneImageView
 
 // Local — SF Symbol
 ImageView(.local(.system("star.fill")))
@@ -111,7 +111,7 @@ ImageView(.remote(.urlString("")))                       // -> failure placehold
 
 ## Remote rendering — plug in any SDK
 
-The library (`Core`/`View`) has **no third-party dependencies** and **zero type erasure** — no `AnyView`, no existential anywhere. `ImageView` is generic over a `RemoteImageRenderer`, so whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its concrete type intact. (The sample app adds Kingfisher to demonstrate the injection — see `Sources/OneImageSampleUI/KingfisherRenderer.swift`.)
+The library (`OneImageCore`/`OneImageView`) has **no third-party dependencies** and **zero type erasure** — no `AnyView`, no existential anywhere. `ImageView` is generic over a `RemoteImageRenderer`, so whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its concrete type intact. (The sample app adds Kingfisher to demonstrate the injection — see `Sources/OneImageSampleUI/KingfisherRenderer.swift`.)
 
 Without a renderer, `ImageView` uses a built-in remote view (`AsyncRemoteImage<Loading, Failure>`, backed by SwiftUI's `AsyncImage`) that keeps your typed placeholders and style:
 
@@ -155,7 +155,7 @@ Because `RemoteView` is a generic parameter, you can mix renderers freely — a 
 - **`ImageStyle`** — styling is a plain value type (`resizable`, `renderingMode`, `interpolation`, `antialiased`), applied by `Image.applying(_:)`. Adding a new modifier touches three small places and is picked up automatically by local images and the default remote view.
 - **Type-state placeholders** — `.placeholderLoading {}` changes the generic type of `ImageView`, so placeholder presence is a compile-time guarantee, not a runtime convention.
 - **`ImageView<Loading, Failure, Renderer>`** — the renderer is a generic parameter whose `RemoteView` is a concrete type; `AsyncRemoteImage<Loading, Failure>` handles the built-in default with typed placeholders. No `AnyView`, no existential.
-- **`Core` vs `View`** — the model is deliberately kept free of SwiftUI so it can be reused and tested independently.
+- **`OneImageCore` vs `OneImageView`** — the model is deliberately kept free of SwiftUI so it can be reused and tested independently.
 
 ## Sample app
 

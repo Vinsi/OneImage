@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		23EB08F303E287DBAF7C3A21 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3BBE310BB8BAF9E6E52299 /* ContentView.swift */; };
-		5727EC9E8C8047BC9F9B2437 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = B7FC07AFA357A5F0ABAF6E55 /* Core */; };
+		5727EC9E8C8047BC9F9B2437 /* OneImageCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5FC84DF6DA69707DD5BE4347 /* OneImageCore */; };
 		61EB12252A57BA9D34A9F7B0 /* OneImageDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B39BDD186499DC8287809 /* OneImageDemoApp.swift */; };
 		6E5E26ED3078DD2BF38670CE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 366515E07391AB2A174025CE /* Kingfisher */; };
 		859DDEE5B15E2B7CEBCAD654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA727CE91656E4471D6589C /* Assets.xcassets */; };
 		B70EC31ACC048C2FD8060269 /* KingfisherRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F08DDF9DF9B8CF778C7E85 /* KingfisherRenderer.swift */; };
-		B87E60B6514C99F1732F972B /* View in Frameworks */ = {isa = PBXBuildFile; productRef = 2D8A8703BF9A6E2A5DC314EA /* View */; };
+		B87E60B6514C99F1732F972B /* OneImageView in Frameworks */ = {isa = PBXBuildFile; productRef = F6A6501A2B71501640AD8573 /* OneImageView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +30,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5727EC9E8C8047BC9F9B2437 /* Core in Frameworks */,
-				B87E60B6514C99F1732F972B /* View in Frameworks */,
+				5727EC9E8C8047BC9F9B2437 /* OneImageCore in Frameworks */,
+				B87E60B6514C99F1732F972B /* OneImageView in Frameworks */,
 				6E5E26ED3078DD2BF38670CE /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,8 +92,8 @@
 			);
 			name = OneImageDemo;
 			packageProductDependencies = (
-				B7FC07AFA357A5F0ABAF6E55 /* Core */,
-				2D8A8703BF9A6E2A5DC314EA /* View */,
+				5FC84DF6DA69707DD5BE4347 /* OneImageCore */,
+				F6A6501A2B71501640AD8573 /* OneImageView */,
 				366515E07391AB2A174025CE /* Kingfisher */,
 			);
 			productName = OneImageDemo;
@@ -354,18 +354,18 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2D8A8703BF9A6E2A5DC314EA /* View */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = View;
-		};
 		366515E07391AB2A174025CE /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C5BD0C98AED0B4D116605DA0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		B7FC07AFA357A5F0ABAF6E55 /* Core */ = {
+		5FC84DF6DA69707DD5BE4347 /* OneImageCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Core;
+			productName = OneImageCore;
+		};
+		F6A6501A2B71501640AD8573 /* OneImageView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OneImageView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

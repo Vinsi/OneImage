@@ -1,6 +1,6 @@
 import Kingfisher
+import OneImageView
 import SwiftUI
-import View
 
 struct KingfisherRenderer: RemoteImageRenderer {
     @MainActor

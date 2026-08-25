@@ -36,4 +36,4 @@ The OneImage package is referenced by local path (`../..`), so changes to the li
 
 ## How the dependency is wired
 
-`project.yml` adds the OneImage package (products `Core` and `View`) plus `Kingfisher` directly, so the demo can define its own `KingfisherRenderer` without the library depending on any SDK.
+`project.yml` adds the OneImage package (products `OneImageCore` and `OneImageView`) plus `Kingfisher` directly, so the demo can define its own `KingfisherRenderer` without the library depending on any SDK.

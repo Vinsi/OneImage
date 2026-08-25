@@ -7,7 +7,7 @@ Consumers typically need to show images from several different sources — a loc
 1. **Single mental model** — one enum describing any image source: `.remote(.url(...))`, `.local(.system(...))`, `.local(.asset(...))`, `.local(.resource(...))`.
 2. **Consistent configuration** — `.resizable()`, `.renderingMode()`, `.interpolation()`, `.antialiased()` behave identically whether the underlying image is a SwiftUI `Image` or a network-loaded `KFImage`.
 3. **First-class placeholder handling** — loading and failure placeholders are part of the type system, so states are explicit and cannot be forgotten at compile time.
-4. **Platform-independent core** — the model (`Core`) carries no SwiftUI dependency, keeping the domain vocabulary reusable and testable.
+4. **Platform-independent core** — the model (`OneImageCore`) carries no SwiftUI dependency, keeping the domain vocabulary reusable and testable.
 
 ## User experience (API surface)
 ```swift

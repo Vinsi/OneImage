@@ -5,16 +5,16 @@
 - **Platforms**: iOS 17+, macOS 14+
 - **Package manager**: Swift Package Manager
 - **Dependencies (library)**: none (remote rendering is pluggable; default uses SwiftUI `AsyncImage`)
-- **Dependencies (sample only)**: `Kingfisher` >= 8.0.0 — wired into `OneImageSampleUI` to demonstrate a real third-party renderer (`KingfisherRenderer`); the `Core`/`View` library products stay dependency-free
+- **Dependencies (sample only)**: `Kingfisher` >= 8.0.0 — wired into `OneImageSampleUI` to demonstrate a real third-party renderer (`KingfisherRenderer`); the `OneImageCore`/`OneImageView` library products stay dependency-free
 - **Formatting**: `.swift-format` config present at package root
 - **License**: MIT
 
 ## Products (Package.swift)
 | Product | Type | Targets |
 | --- | --- | --- |
-| `Core` | library | `Core` (no deps) |
-| `View` | library | `View` (depends on `Core`) |
-| `OneImageSampleUI` | library | `OneImageSampleUI` (depends on `View`, `Kingfisher`) |
+| `OneImageCore` | library | `OneImageCore` (no deps) |
+| `OneImageView` | library | `OneImageView` (depends on `OneImageCore`) |
+| `OneImageSampleUI` | library | `OneImageSampleUI` (depends on `OneImageView`, `Kingfisher`) |
 | `OneImageSample` | executable | `OneImageSample` (depends on `OneImageSampleUI`; embeds `Info.plist` via linker sectcreate flags) |
 
 ## Source layout
@@ -25,14 +25,14 @@
 
 ## Tests
 - Framework: **Swift Testing** (`import Testing`), not XCTest
-- `Tests/CoreTests/CoreTests.swift` — 2 tests (asset bundle default, remote equality)
-- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer pinned to `DefaultImageRenderer` marker, fake renderer invoked with url/style, renderer survives placeholder replacement, built-in `AsyncRemoteImage` smoke test)
+- `Tests/OneImageCoreTests/CoreTests.swift` — 2 tests (asset bundle default, remote equality)
+- `Tests/OneImageViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer pinned to `DefaultImageRenderer` marker, fake renderer invoked with url/style, renderer survives placeholder replacement, built-in `AsyncRemoteImage` smoke test)
 - Tests are `@MainActor` where they touch SwiftUI.
 
 ## Commands
 ```sh
 swift build                 # build all targets
-swift test                  # run CoreTests + ViewUITests
+swift test                  # run OneImageCoreTests + OneImageViewUITests
 swift run OneImageSample     # run the sample app
 ```
 Previews: open package in Xcode, scheme `OneImageSampleUI`, open `ContentView.swift` or `Previews.swift` in canvas.

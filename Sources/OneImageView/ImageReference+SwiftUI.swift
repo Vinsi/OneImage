@@ -5,7 +5,7 @@
 //  Created by Vinsi on 23.8.26.
 //
 
-import Core
+import OneImageCore
 import SwiftUI
 
 extension ImageReference.LocalSource {
