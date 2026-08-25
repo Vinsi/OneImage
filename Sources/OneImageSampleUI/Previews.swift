@@ -100,29 +100,18 @@ private struct StyledAsyncRenderer: RemoteImageRenderer {
         loading: ImagePlaceholder<Loading>,
         failure: ImagePlaceholder<Failure>,
         style: ImageStyle
-    ) -> any View {
-        AsyncImage(url: url) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .applying(style)
-                    .saturation(0.2)
-            case .failure:
-                Image(systemName: "wifi.exclamationmark")
-            @unknown default:
-                failure
-            }
-        }
+    ) -> AsyncRemoteImage {
+        AsyncRemoteImage(
+            url: url, loading: AnyView(loading), failure: AnyView(failure), style: style)
     }
 }
 
 #Preview("Injected Remote Renderer") {
     PreviewRow(
-        title: ".environment(\\.remoteImageRenderer, ...)",
-        content: ImageView(.remote(.urlString("https://picsum.photos/200/200")))
-            .resizable()
-            .environment(\.remoteImageRenderer, StyledAsyncRenderer())
+        title: "ImageView(..., renderer:)",
+        content: ImageView(
+            .remote(.urlString("https://picsum.photos/200/200")), renderer: StyledAsyncRenderer()
+        )
+        .resizable()
     )
 }

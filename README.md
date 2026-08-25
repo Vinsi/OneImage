@@ -109,11 +109,17 @@ ImageView(.remote(.urlString("")))                       // -> failure placehold
 - `.setCornerRadius(_:)`
 - `.placeholderLoading { ... }` / `.placeholderFailure { ... }`
 
-## Remote rendering — inject your own loader
+## Remote rendering — plug in any SDK
 
-`View` has **no third-party dependencies**. Remote images are rendered by an injectable `RemoteImageRenderer`, which defaults to `AsyncImageRenderer` (SwiftUI's `AsyncImage`).
+`View` has **no third-party dependencies**. `ImageView` is generic over a `RemoteImageRenderer`, which returns a concrete view type — so **no type erasure**: whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its type intact.
 
-Want Kingfisher instead? It's a ~10-line conformance:
+The default `AsyncImageRenderer` (SwiftUI's `AsyncImage`) is used when you don't pass one:
+
+```swift
+ImageView(.remote(.urlString("https://picsum.photos/200")))   // AsyncImageRenderer by default
+```
+
+Want Kingfisher instead? A ~10-line conformance, passed at init:
 
 ```swift
 import Kingfisher
@@ -125,7 +131,7 @@ struct KingfisherRenderer: RemoteImageRenderer {
         loading: ImagePlaceholder<Loading>,
         failure: ImagePlaceholder<Failure>,
         style: ImageStyle
-    ) -> any View {
+    ) -> KFImage {
         KFImage(url)
             .placeholder { loading }
             .onFailureView { failure }
@@ -135,25 +141,18 @@ struct KingfisherRenderer: RemoteImageRenderer {
     }
 }
 
-ContentView()
-    .environment(\.remoteImageRenderer, KingfisherRenderer())
+ImageView(.remote(.urlString("https://example.com/hero.png")), renderer: KingfisherRenderer())
 ```
 
-### Per-view override
+Each renderer gets the typed placeholders and the applied `ImageStyle` so it can forward `.resizable()`, `.renderingMode()`, etc. to its own view type. For loaders that expose an inner `Image` (like `AsyncImage`), use `image.applying(style)`.
 
-Need a different renderer for one specific image? Override it directly on the `ImageView` — it takes precedence over the environment:
-
-```swift
-ImageView(.remote(.urlString("https://example.com/hero.png")))
-    .remoteImageRenderer(MyLightweightRenderer())
-```
-
-The renderer receives the applied `ImageStyle` so it can forward `.resizable()`, `.renderingMode()`, etc. to its own view type. For loaders that expose an inner `Image` (like `AsyncImage`), just use `image.applying(style)`.
+Because `RemoteView` is a generic parameter, you can mix renderers freely — a Kingfisher image here, a Nuke image there — each with its concrete type preserved.
 
 ## Under the hood
 
 - **`ImageStyle`** — styling is a plain value type (`resizable`, `renderingMode`, `interpolation`, `antialiased`), applied by `Image.applying(_:)`. Adding a new modifier touches three small places and is picked up automatically by local images and the default renderer.
 - **Type-state placeholders** — `.placeholderLoading {}` changes the generic type of `ImageView`, so placeholder presence is a compile-time guarantee, not a runtime convention.
+- **`ImageView<Loading, Failure, Renderer>`** — the renderer is a generic parameter whose `RemoteView` is a concrete type; no `AnyView`, no existential, so SwiftUI sees the SDK's actual view through the whole tree.
 - **`Core` vs `View`** — the model is deliberately kept free of SwiftUI so it can be reused and tested independently.
 
 ## Sample app

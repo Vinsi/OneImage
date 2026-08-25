@@ -72,15 +72,17 @@ struct ImageViewRenderingTests {
         #expect(view.configuration.style.renderingMode == .template)
     }
 
-    @Test func defaultRemoteRendererIsAsyncImage() {
-        let renderer = EnvironmentValues().remoteImageRenderer
+    @Test func defaultRendererPinsAsyncImage() {
+        let view: ImageView<EmptyView, EmptyView, AsyncImageRenderer> =
+            ImageView(.remote(.urlString("https://example.com/a.png")))
 
-        #expect(renderer is AsyncImageRenderer)
+        let renderer = ImageRenderer(content: view)
+        _ = renderer.cgImage
     }
 }
 
 private final class RendererCallBox: @unchecked Sendable {
-    var url: URL?
+    var urls: [URL] = []
     var style: ImageStyle?
 }
 
@@ -93,8 +95,8 @@ private struct FakeRenderer: RemoteImageRenderer {
         loading: ImagePlaceholder<Loading>,
         failure: ImagePlaceholder<Failure>,
         style: ImageStyle
-    ) -> any View {
-        box.url = url
+    ) -> Text {
+        box.urls.append(url)
         box.style = style
         return Text("remote")
     }
@@ -103,31 +105,33 @@ private struct FakeRenderer: RemoteImageRenderer {
 @MainActor
 struct RemoteImageRendererInjectionTests {
 
-    @Test func injectedRendererReceivesURLAndStyle() {
+    @Test func rendererIsInvokedWithURLAndStyle() {
         let box = RendererCallBox()
-        let view = ImageView(.remote(.url(URL(string: "https://example.com/a.png")!)))
-            .resizable()
-            .environment(\.remoteImageRenderer, FakeRenderer(box: box))
+        let view = ImageView(
+            .remote(.url(URL(string: "https://example.com/a.png")!)),
+            renderer: FakeRenderer(box: box)
+        )
+        .resizable()
 
         let renderer = ImageRenderer(content: view)
         _ = renderer.cgImage
 
-        #expect(box.url?.absoluteString == "https://example.com/a.png")
+        #expect(box.urls.first?.absoluteString == "https://example.com/a.png")
         #expect(box.style?.resize != nil)
     }
 
-    @Test func perViewRendererOverridesEnvironment() {
-        let envBox = RendererCallBox()
-        let viewBox = RendererCallBox()
-        let view = ImageView(.remote(.url(URL(string: "https://example.com/a.png")!)))
-            .remoteImageRenderer(FakeRenderer(box: viewBox))
-            .environment(\.remoteImageRenderer, FakeRenderer(box: envBox))
+    @Test func rendererSurvivesPlaceholderReplacement() {
+        let box = RendererCallBox()
+        let view = ImageView(
+            .remote(.urlString("https://example.com/a.png")),
+            renderer: FakeRenderer(box: box)
+        )
+        .placeholderFailure { Text("Failed") }
 
         let renderer = ImageRenderer(content: view)
         _ = renderer.cgImage
 
-        #expect(envBox.url == nil)
-        #expect(viewBox.url?.absoluteString == "https://example.com/a.png")
+        #expect(box.urls.count == 1)
     }
 
     @Test func asyncImageRendererBuildsRemoteView() {
@@ -138,7 +142,7 @@ struct RemoteImageRendererInjectionTests {
             style: ImageStyle()
         )
 
-        let renderer = ImageRenderer(content: AnyView(view))
+        let renderer = ImageRenderer(content: view)
         _ = renderer.cgImage
     }
 }

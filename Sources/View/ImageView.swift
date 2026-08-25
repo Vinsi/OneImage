@@ -8,12 +8,16 @@
 import Core
 import SwiftUI
 
-public struct ImageView<Loading: View, Failure: View>: View {
+public struct ImageView<Loading: View, Failure: View, Renderer: RemoteImageRenderer>: View {
     let configuration: ImageConfiguration<Loading, Failure>
-    @Environment(\.remoteImageRenderer) private var remoteImageRenderer
+    let renderer: Renderer
 
-    init(configuration: ImageConfiguration<Loading, Failure>) {
+    init(
+        configuration: ImageConfiguration<Loading, Failure>,
+        renderer: Renderer
+    ) {
         self.configuration = configuration
+        self.renderer = renderer
     }
 
     public var body: some View {
@@ -40,35 +44,47 @@ public struct ImageView<Loading: View, Failure: View>: View {
         resource.imageView.applying(configuration.style)
     }
 
-    private func remote(_ url: URL) -> AnyView {
-        let renderer = configuration.remoteImageRenderer ?? remoteImageRenderer
-        return AnyView(
-            renderer.makeRemoteImage(
-                url: url,
-                loading: configuration.loadingPlaceHolder,
-                failure: configuration.failurePlaceHolder,
-                style: configuration.style
-            )
+    private func remote(_ url: URL) -> some View {
+        renderer.makeRemoteImage(
+            url: url,
+            loading: configuration.loadingPlaceHolder,
+            failure: configuration.failurePlaceHolder,
+            style: configuration.style
         )
     }
 
     func with(
         _ update: (inout ImageConfiguration<Loading, Failure>) -> Void
-    ) -> ImageView<Loading, Failure> {
+    ) -> ImageView<Loading, Failure, Renderer> {
         var configuration = self.configuration
         update(&configuration)
-        return ImageView(configuration: configuration)
+        return ImageView(configuration: configuration, renderer: renderer)
     }
 }
 
 extension ImageView where Loading == EmptyView, Failure == EmptyView {
+    public init(_ ref: ImageReference, renderer: Renderer) {
+        self.init(
+            configuration: .init(
+                loadingPlaceHolder: .none,
+                failurePlaceHolder: .none,
+                imageReference: ref
+            ),
+            renderer: renderer
+        )
+    }
+}
+
+extension ImageView
+where Renderer == AsyncImageRenderer, Loading == EmptyView, Failure == EmptyView {
     public init(_ ref: ImageReference) {
         self.init(
             configuration: .init(
                 loadingPlaceHolder: .none,
                 failurePlaceHolder: .none,
                 imageReference: ref
-            )
+            ),
+            renderer: AsyncImageRenderer()
         )
     }
 }

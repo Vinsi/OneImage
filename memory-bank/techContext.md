@@ -25,7 +25,7 @@
 ## Tests
 - Framework: **Swift Testing** (`import Testing`), not XCTest
 - `Tests/CoreTests/CoreTests.swift` — 2 tests (asset bundle default, remote equality)
-- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer is `AsyncImageRenderer`, injected renderer receives url/style, per-view renderer overrides environment, `AsyncImageRenderer` smoke test)
+- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer pinned to `AsyncImageRenderer`, fake renderer invoked with url/style, renderer survives placeholder replacement, `AsyncImageRenderer` smoke test)
 - Tests are `@MainActor` where they touch SwiftUI.
 
 ## Commands
@@ -45,4 +45,4 @@ Previews: open package in Xcode, scheme `OneImageSampleUI`, open `ContentView.sw
 - Remote: `https://github.com/Vinsi/OneImage.git` (`origin`)
 - Branch: `main` (tracks `origin/main`)
 - Latest commit: `4022a59` "Initial release: OneImage SwiftUI image library"
-- Uncommitted: the Kingfisher-decoupling refactor (renderer injection) in the working tree
+- Uncommitted: the generic renderer redesign (`ImageView<Loading, Failure, Renderer>`, no AnyView) in the working tree

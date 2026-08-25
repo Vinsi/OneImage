@@ -15,5 +15,4 @@ struct ImageConfiguration<Loading: View, Failure: View> {
     var failurePlaceHolder: ImagePlaceholder<Failure>
     var imageReference: ImageReference
     var style: ImageStyle = ImageStyle()
-    var remoteImageRenderer: (any RemoteImageRenderer)?
 }
