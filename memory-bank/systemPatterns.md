@@ -18,7 +18,7 @@
 │    ImageView<Loading, Failure, Renderer>                  │
 │    ImageConfiguration (config bag)                        │
 │    RemoteImageRenderer protocol (associated RemoteView)   │
-│    AsyncImageRenderer / AsyncRemoteImage (default)        │
+│    AsyncRemoteImage<Loading, Failure> (built-in default)  │
 │    ImageStyle, ImagePlaceholder                           │
 └──────────────────────┬───────────────────────────────────┘
                        │ depends on Core
@@ -47,7 +47,7 @@ The remote view is the renderer's concrete `RemoteView` type — **no `AnyView`,
 Styling (resizable/renderingMode/interpolation/antialiased) is a plain value (`ImageStyle`), applied by `Image.applying(_:)` (`Image+Style.swift`). Adding a new modifier = 1 field in `ImageStyle` + 1 case in `Image.applying` + 1 public modifier on `ImageView`. Local images and the default renderer pick it up automatically; a custom renderer owning a foreign view type (e.g. `KFImage`) mirrors the field once.
 
 ### 4. Generic remote rendering (`RemoteImageRenderer.swift`)
-`RemoteImageRenderer` is a `Sendable` protocol with an `associatedtype RemoteView: View` and a `@MainActor` generic method. `ImageView<Loading, Failure, Renderer>` stores a concrete `Renderer`; the default init pins `Renderer == AsyncImageRenderer` (SwiftUI `AsyncImage`), and a custom renderer (Kingfisher, Nuke, SDWebImage) is passed at init: `ImageView(ref, renderer: KingfisherRenderer())`. The renderer is preserved through placeholder/style modifiers. This is why `View` has **no third-party dependency** and **no type erasure**.
+`RemoteImageRenderer` is a `Sendable` protocol with an `associatedtype RemoteView: View` and a `@MainActor` generic method. `ImageView<Loading, Failure, Renderer>` stores a concrete `Renderer` (optional value); the default init pins `Renderer == DefaultImageRenderer` (a marker with `RemoteView == Never`, never called) and `ImageView.remote` builds the built-in `AsyncRemoteImage<Loading, Failure>` directly. A custom renderer (Kingfisher, Nuke, SDWebImage) is passed at init: `ImageView(ref, renderer: KingfisherRenderer())`. The renderer is preserved through placeholder/style modifiers. This is why `View` has **no third-party dependency** and **zero type erasure** — literally no `AnyView` and no `any View` existential anywhere.
 
 ### 5. Type-state placeholder design
 `ImageView<Loading: View, Failure: View, Renderer>` encodes placeholder presence in the generic parameters. `.placeholderLoading { }` returns `ImageView<NewLoading, Failure, Renderer>`; `.placeholderFailure { }` returns `ImageView<Loading, NewFailure, Renderer>` (see `ImageView+Placeholder.swift`). State transitions happen at compile time. Plain inits exist only when `Loading == EmptyView, Failure == EmptyView` (`ImageView.swift`).
@@ -56,7 +56,7 @@ Styling (resizable/renderingMode/interpolation/antialiased) is a plain value (`I
 All modifiers in `ImageView+Modifiers.swift` mutate a copy of `ImageConfiguration` via `with(_:)` and return a new `ImageView`. `ImageConfiguration` is a `@MainActor` struct (`ImageConfiguration.swift:12`) holding the reference, placeholders, `cornerRadius`, and `ImageStyle` (the renderer lives on `ImageView`, not the config).
 
 ### 7. Placeholder wrapper
-`ImagePlaceholder<Content>` (`ImagePlaceholder.swift`) is a thin wrapper with convenience inits: `.none` (EmptyView), from a `LocalSource` image, or a `@ViewBuilder` closure. It is passed (still typed) into the renderer, which wires it to its own loading/failure hooks. The default `AsyncRemoteImage` erases placeholders to `AnyView` internally (its type must stay fixed to satisfy `RemoteView`).
+`ImagePlaceholder<Content>` (`ImagePlaceholder.swift`) is a thin wrapper with convenience inits: `.none` (EmptyView), from a `LocalSource` image, or a `@ViewBuilder` closure. It is passed (still typed) into the renderer, which wires it to its own loading/failure hooks; the built-in `AsyncRemoteImage<Loading, Failure>` stores them typed (its type legitimately depends on the placeholder generics, so no erasure is needed).
 
 ## Notable observations / risks
 - `cornerRadius` is stored in `ImageConfiguration` (`setCornerRadius`) but **not applied anywhere in `ImageView.body`** — currently a no-op configuration (only asserted in tests).

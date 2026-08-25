@@ -72,8 +72,8 @@ struct ImageViewRenderingTests {
         #expect(view.configuration.style.renderingMode == .template)
     }
 
-    @Test func defaultRendererPinsAsyncImage() {
-        let view: ImageView<EmptyView, EmptyView, AsyncImageRenderer> =
+    @Test func defaultRendererPinsBuiltIn() {
+        let view: ImageView<EmptyView, EmptyView, DefaultImageRenderer> =
             ImageView(.remote(.urlString("https://example.com/a.png")))
 
         let renderer = ImageRenderer(content: view)
@@ -134,8 +134,8 @@ struct RemoteImageRendererInjectionTests {
         #expect(box.urls.count == 1)
     }
 
-    @Test func asyncImageRendererBuildsRemoteView() {
-        let view = AsyncImageRenderer().makeRemoteImage(
+    @Test func builtInRemoteImageBuilds() {
+        let view = AsyncRemoteImage(
             url: URL(string: "https://picsum.photos/200")!,
             loading: .none,
             failure: .none,

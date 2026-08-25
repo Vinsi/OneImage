@@ -10,11 +10,11 @@ import SwiftUI
 
 public struct ImageView<Loading: View, Failure: View, Renderer: RemoteImageRenderer>: View {
     let configuration: ImageConfiguration<Loading, Failure>
-    let renderer: Renderer
+    let renderer: Renderer?
 
     init(
         configuration: ImageConfiguration<Loading, Failure>,
-        renderer: Renderer
+        renderer: Renderer?
     ) {
         self.configuration = configuration
         self.renderer = renderer
@@ -44,13 +44,23 @@ public struct ImageView<Loading: View, Failure: View, Renderer: RemoteImageRende
         resource.imageView.applying(configuration.style)
     }
 
+    @ViewBuilder
     private func remote(_ url: URL) -> some View {
-        renderer.makeRemoteImage(
-            url: url,
-            loading: configuration.loadingPlaceHolder,
-            failure: configuration.failurePlaceHolder,
-            style: configuration.style
-        )
+        if let renderer {
+            renderer.makeRemoteImage(
+                url: url,
+                loading: configuration.loadingPlaceHolder,
+                failure: configuration.failurePlaceHolder,
+                style: configuration.style
+            )
+        } else {
+            AsyncRemoteImage(
+                url: url,
+                loading: configuration.loadingPlaceHolder,
+                failure: configuration.failurePlaceHolder,
+                style: configuration.style
+            )
+        }
     }
 
     func with(
@@ -76,7 +86,7 @@ extension ImageView where Loading == EmptyView, Failure == EmptyView {
 }
 
 extension ImageView
-where Renderer == AsyncImageRenderer, Loading == EmptyView, Failure == EmptyView {
+where Renderer == DefaultImageRenderer, Loading == EmptyView, Failure == EmptyView {
     public init(_ ref: ImageReference) {
         self.init(
             configuration: .init(
@@ -84,7 +94,7 @@ where Renderer == AsyncImageRenderer, Loading == EmptyView, Failure == EmptyView
                 failurePlaceHolder: .none,
                 imageReference: ref
             ),
-            renderer: AsyncImageRenderer()
+            renderer: nil
         )
     }
 }

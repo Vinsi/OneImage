@@ -111,12 +111,14 @@ ImageView(.remote(.urlString("")))                       // -> failure placehold
 
 ## Remote rendering — plug in any SDK
 
-`View` has **no third-party dependencies**. `ImageView` is generic over a `RemoteImageRenderer`, which returns a concrete view type — so **no type erasure**: whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its type intact.
+`View` has **no third-party dependencies** and **zero type erasure** — no `AnyView`, no existential anywhere. `ImageView` is generic over a `RemoteImageRenderer`, so whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its concrete type intact.
 
-The default `AsyncImageRenderer` (SwiftUI's `AsyncImage`) is used when you don't pass one:
+Without a renderer, `ImageView` uses a built-in remote view (`AsyncRemoteImage<Loading, Failure>`, backed by SwiftUI's `AsyncImage`) that keeps your typed placeholders and style:
 
 ```swift
-ImageView(.remote(.urlString("https://picsum.photos/200")))   // AsyncImageRenderer by default
+ImageView(.remote(.urlString("https://picsum.photos/200")))
+    .placeholderLoading { ProgressView() }
+    .placeholderFailure { Image(systemName: "exclamationmark.triangle") }
 ```
 
 Want Kingfisher instead? A ~10-line conformance, passed at init:
@@ -150,9 +152,9 @@ Because `RemoteView` is a generic parameter, you can mix renderers freely — a 
 
 ## Under the hood
 
-- **`ImageStyle`** — styling is a plain value type (`resizable`, `renderingMode`, `interpolation`, `antialiased`), applied by `Image.applying(_:)`. Adding a new modifier touches three small places and is picked up automatically by local images and the default renderer.
+- **`ImageStyle`** — styling is a plain value type (`resizable`, `renderingMode`, `interpolation`, `antialiased`), applied by `Image.applying(_:)`. Adding a new modifier touches three small places and is picked up automatically by local images and the default remote view.
 - **Type-state placeholders** — `.placeholderLoading {}` changes the generic type of `ImageView`, so placeholder presence is a compile-time guarantee, not a runtime convention.
-- **`ImageView<Loading, Failure, Renderer>`** — the renderer is a generic parameter whose `RemoteView` is a concrete type; no `AnyView`, no existential, so SwiftUI sees the SDK's actual view through the whole tree.
+- **`ImageView<Loading, Failure, Renderer>`** — the renderer is a generic parameter whose `RemoteView` is a concrete type; `AsyncRemoteImage<Loading, Failure>` handles the built-in default with typed placeholders. No `AnyView`, no existential.
 - **`Core` vs `View`** — the model is deliberately kept free of SwiftUI so it can be reused and tested independently.
 
 ## Sample app

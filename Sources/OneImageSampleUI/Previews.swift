@@ -92,26 +92,3 @@ private struct PreviewRow<Content: View>: View {
             .resizable()
     )
 }
-
-private struct StyledAsyncRenderer: RemoteImageRenderer {
-    @MainActor
-    func makeRemoteImage<Loading: View, Failure: View>(
-        url: URL,
-        loading: ImagePlaceholder<Loading>,
-        failure: ImagePlaceholder<Failure>,
-        style: ImageStyle
-    ) -> AsyncRemoteImage {
-        AsyncRemoteImage(
-            url: url, loading: AnyView(loading), failure: AnyView(failure), style: style)
-    }
-}
-
-#Preview("Injected Remote Renderer") {
-    PreviewRow(
-        title: "ImageView(..., renderer:)",
-        content: ImageView(
-            .remote(.urlString("https://picsum.photos/200/200")), renderer: StyledAsyncRenderer()
-        )
-        .resizable()
-    )
-}

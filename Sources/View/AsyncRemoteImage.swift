@@ -1,5 +1,5 @@
 //
-//  AsyncImageRenderer.swift
+//  AsyncRemoteImage.swift
 //  OneImage
 //
 //  Created by Vinsi on 23.8.26.
@@ -7,35 +7,16 @@
 
 import SwiftUI
 
-public struct AsyncImageRenderer: RemoteImageRenderer {
-    public init() {}
-
-    @MainActor
-    public func makeRemoteImage<Loading: View, Failure: View>(
-        url: URL,
-        loading: ImagePlaceholder<Loading>,
-        failure: ImagePlaceholder<Failure>,
-        style: ImageStyle
-    ) -> AsyncRemoteImage {
-        AsyncRemoteImage(
-            url: url,
-            loading: AnyView(loading),
-            failure: AnyView(failure),
-            style: style
-        )
-    }
-}
-
-public struct AsyncRemoteImage: View {
+public struct AsyncRemoteImage<Loading: View, Failure: View>: View {
     let url: URL
-    let loading: AnyView
-    let failure: AnyView
+    let loading: ImagePlaceholder<Loading>
+    let failure: ImagePlaceholder<Failure>
     let style: ImageStyle
 
     public init(
         url: URL,
-        loading: AnyView,
-        failure: AnyView,
+        loading: ImagePlaceholder<Loading>,
+        failure: ImagePlaceholder<Failure>,
         style: ImageStyle
     ) {
         self.url = url

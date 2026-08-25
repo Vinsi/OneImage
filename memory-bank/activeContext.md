@@ -1,14 +1,13 @@
 # Active Context: OneImage
 
 ## Current focus
-The working tree contains the **generic renderer redesign** (in progress, uncommitted): `ImageView` is now `ImageView<Loading, Failure, Renderer>` where `RemoteImageRenderer` has an `associatedtype RemoteView: View`. This removes all `AnyView`/existential usage — the SDK's concrete view type (KFImage, WebImage, LazyImage, `AsyncRemoteImage`) flows through the tree. Trade-off chosen deliberately: renderer is fixed at init (default pinned to `AsyncImageRenderer`); runtime environment injection was removed.
+The working tree contains the **zero-type-erasure renderer design** (uncommitted): `ImageView<Loading, Failure, Renderer>` where `RemoteImageRenderer` has `associatedtype RemoteView: View`. There is **no `AnyView` and no `any View` anywhere** in the library.
 
-- `RemoteImageRenderer.swift` — protocol with `associatedtype RemoteView` + generic `makeRemoteImage`, no env key.
-- `AsyncImageRenderer.swift` — default; `RemoteView = AsyncRemoteImage` (erases placeholders to `AnyView` internally to keep a fixed type).
-- `ImageView.swift` — `Renderer` generic param, stored on the struct; default init pins `Renderer == AsyncImageRenderer`.
-- Removed: `\.remoteImageRenderer` environment key, `.remoteImageRenderer(_:)` modifier, `remoteImageRenderer` config field.
-- Placeholder modifiers now return `ImageView<NewLoading, NewFailure, Renderer>` (renderer threaded through).
-- Tests updated: renderer invoked synchronously (no async), default pins AsyncImageRenderer, renderer survives placeholder replacement.
+- `RemoteImageRenderer.swift` — protocol (associated `RemoteView`, `@MainActor` generic method) + `DefaultImageRenderer` marker (`RemoteView = Never`, never called).
+- `AsyncRemoteImage.swift` — built-in default, **generic** `AsyncRemoteImage<Loading, Failure>` storing typed placeholders; no erasure (its type legitimately depends on the placeholder generics). Replaced the old `AsyncImageRenderer`.
+- `ImageView.swift` — `Renderer` generic param, stored as `Renderer?`; `remote()` is a `@ViewBuilder` `if let renderer` that either calls the renderer (custom SDK) or builds `AsyncRemoteImage<Loading, Failure>` (default). Default init pins `Renderer == DefaultImageRenderer`.
+- Removed: `AnyView` entirely, `AsyncImageRenderer`, environment key, per-view renderer modifier.
+- Tests updated: default pins `DefaultImageRenderer`, fake renderer invoked synchronously, renderer survives placeholder replacement, built-in `AsyncRemoteImage` smoke test.
 
 ## Open questions / decisions pending
 1. **`cornerRadius` dead code** — `setCornerRadius` populates `ImageConfiguration.cornerRadius` but nothing applies it in the view body. Decide: apply it (e.g. `.clipShape(RoundedRectangle(...))` or `.cornerRadius`), or remove the modifier/config field.
@@ -17,8 +16,8 @@ The working tree contains the **generic renderer redesign** (in progress, uncomm
 4. **Release** — README references `from: "1.0.0"` but no tag/version exists yet.
 
 ## What changed since the last session
-- Replaced the `any View` + `AnyView` renderer contract with the generic `<Loading, Failure, Renderer>` design (per decision: renderer must return arbitrary SDK views, and AnyView/erasure was rejected).
-- Earlier in this session: Kingfisher decoupling (renderer injection), repo rename to OneImage, CI, per-view override (that mechanism was superseded by the generic design).
+- Implemented the zero-type-erasure design: the built-in default is now generic `AsyncRemoteImage<Loading, Failure>` built directly by `ImageView` (no renderer needed for defaults); `DefaultImageRenderer` is a never-called marker filling the generic slot. This removed the last `AnyView` (previously inside the default renderer).
+- Earlier this session: generic `ImageView<Loading, Failure, Renderer>` replaced the `any View` + `AnyView` contract (renderer returns arbitrary SDK views; chosen over runtime env injection), plus Kingfisher decoupling, repo rename to OneImage, and CI.
 
 ## Next steps (suggested)
 1. Commit the generic renderer redesign.

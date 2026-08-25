@@ -18,3 +18,21 @@ public protocol RemoteImageRenderer: Sendable {
         style: ImageStyle
     ) -> RemoteView
 }
+
+public struct DefaultImageRenderer: RemoteImageRenderer {
+    public init() {}
+
+    public typealias RemoteView = Never
+
+    @MainActor
+    public func makeRemoteImage<Loading: View, Failure: View>(
+        url: URL,
+        loading: ImagePlaceholder<Loading>,
+        failure: ImagePlaceholder<Failure>,
+        style: ImageStyle
+    ) -> Never {
+        fatalError(
+            "DefaultImageRenderer is a marker type for the built-in AsyncImage path and must not be called"
+        )
+    }
+}

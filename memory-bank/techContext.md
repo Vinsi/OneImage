@@ -18,14 +18,14 @@
 
 ## Source layout
 - `Sources/Core/ImageReference.swift` — model enum
-- `Sources/View/` — `ImageView.swift`, `ImageConfiguration.swift`, `ImageStyle.swift`, `Image+Style.swift`, `RemoteImageRenderer.swift`, `AsyncImageRenderer.swift`, `ImagePlaceholder.swift`, `ImageReference+SwiftUI.swift`, `ImageView+Modifiers.swift`, `ImageView+Placeholder.swift`
+- `Sources/View/` — `ImageView.swift`, `ImageConfiguration.swift`, `ImageStyle.swift`, `Image+Style.swift`, `RemoteImageRenderer.swift`, `AsyncRemoteImage.swift`, `ImagePlaceholder.swift`, `ImageReference+SwiftUI.swift`, `ImageView+Modifiers.swift`, `ImageView+Placeholder.swift`
 - `Sources/OneImageSampleUI/` — `ContentView.swift`, `Previews.swift`
 - `Sources/OneImageSample/` — `OneImageSampleApp.swift`, `Info.plist`
 
 ## Tests
 - Framework: **Swift Testing** (`import Testing`), not XCTest
 - `Tests/CoreTests/CoreTests.swift` — 2 tests (asset bundle default, remote equality)
-- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer pinned to `AsyncImageRenderer`, fake renderer invoked with url/style, renderer survives placeholder replacement, `AsyncImageRenderer` smoke test)
+- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer pinned to `DefaultImageRenderer` marker, fake renderer invoked with url/style, renderer survives placeholder replacement, built-in `AsyncRemoteImage` smoke test)
 - Tests are `@MainActor` where they touch SwiftUI.
 
 ## Commands
