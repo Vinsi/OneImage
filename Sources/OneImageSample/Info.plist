@@ -5,13 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>ImageIOSample</string>
+	<string>OneImageSample</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.imageio.ImageIOSample</string>
+	<string>com.oneimage.OneImageSample</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ImageIOSample</string>
+	<string>OneImageSample</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

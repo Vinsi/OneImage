@@ -1,4 +1,4 @@
-# Active Context: ImageIO
+# Active Context: OneImage
 
 ## Current focus
 Initial release is committed (`4022a59`). The working tree now contains the **Kingfisher-decoupling refactor** (renderer injection), implemented and passing tests but **not yet committed**:

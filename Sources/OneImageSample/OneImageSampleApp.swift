@@ -1,15 +1,15 @@
 //
-//  ImageIOSampleApp.swift
-//  ImageIO
+//  OneImageSampleApp.swift
+//  OneImage
 //
 //  Created by Vinsi on 23.8.26.
 //
 
-import ImageIOSampleUI
+import OneImageSampleUI
 import SwiftUI
 
 @main
-struct ImageIOSampleApp: App {
+struct OneImageSampleApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

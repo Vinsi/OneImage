@@ -1,15 +1,15 @@
-# System Patterns: ImageIO
+# System Patterns: OneImage
 
 ## Module architecture
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  ImageIOSample (executable)                              │
+│  OneImageSample (executable)                              │
 │    @main App -> ContentView                              │
 └──────────────────────┬───────────────────────────────────┘
                        │
 ┌──────────────────────▼───────────────────────────────────┐
-│  ImageIOSampleUI (sample app UI + previews)              │
+│  OneImageSampleUI (sample app UI + previews)              │
 │    ContentView.swift, Previews.swift                     │
 └──────────────────────┬───────────────────────────────────┘
                        │ depends on View
@@ -28,7 +28,7 @@
 └──────────────────────────────────────────────────────────┘
 ```
 
-Dependency direction is strictly downward: `Core` <- `View` <- `ImageIOSampleUI` <- `ImageIOSample`. Tests: `CoreTests` (on `Core`), `ViewUITests` (on `View`).
+Dependency direction is strictly downward: `Core` <- `View` <- `OneImageSampleUI` <- `OneImageSample`. Tests: `CoreTests` (on `Core`), `ViewUITests` (on `View`).
 
 ## Key patterns
 

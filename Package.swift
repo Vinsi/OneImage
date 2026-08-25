@@ -7,7 +7,7 @@ import PackageDescription
 let packageDir = URL(fileURLWithPath: #filePath).deletingLastPathComponent().path
 
 let package = Package(
-    name: "ImageIO",
+    name: "OneImage",
     platforms: [
         .iOS(.v17),
         .macOS(.v14),
@@ -23,12 +23,12 @@ let package = Package(
             targets: ["View"]
         ),
         .library(
-            name: "ImageIOSampleUI",
-            targets: ["ImageIOSampleUI"]
+            name: "OneImageSampleUI",
+            targets: ["OneImageSampleUI"]
         ),
         .executable(
-            name: "ImageIOSample",
-            targets: ["ImageIOSample"]
+            name: "OneImageSample",
+            targets: ["OneImageSample"]
         ),
     ],
     targets: [
@@ -44,19 +44,19 @@ let package = Package(
             ]
         ),
         .target(
-            name: "ImageIOSampleUI",
+            name: "OneImageSampleUI",
             dependencies: ["View"]
         ),
         .executableTarget(
-            name: "ImageIOSample",
-            dependencies: ["ImageIOSampleUI"],
+            name: "OneImageSample",
+            dependencies: ["OneImageSampleUI"],
             exclude: ["Info.plist"],
             linkerSettings: [
                 .unsafeFlags([
                     "-Xlinker", "-sectcreate",
                     "-Xlinker", "__TEXT",
                     "-Xlinker", "__info_plist",
-                    "-Xlinker", "\(packageDir)/Sources/ImageIOSample/Info.plist",
+                    "-Xlinker", "\(packageDir)/Sources/OneImageSample/Info.plist",
                 ])
             ]
         ),

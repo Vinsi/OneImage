@@ -1,6 +1,6 @@
 //
 //  ImageStyle.swift
-//  ImageIO
+//  OneImage
 //
 //  Created by Vinsi on 23.8.26.
 //

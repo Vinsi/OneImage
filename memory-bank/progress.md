@@ -1,4 +1,4 @@
-# Progress: ImageIO
+# Progress: OneImage
 
 ## Working
 - `Core` product: `ImageReference` with `remote`/`local` cases; `Equatable`, `Sendable`, `Hashable`.
@@ -8,7 +8,7 @@
   - `ImageStyle` value type centralizes styling via `Image.applying(_:)` (local + default renderer auto-apply; no protocol conformance burden).
   - Modifiers: `resizable`, `renderingMode`, `interpolation`, `antialiased`, `setCornerRadius`.
   - Placeholders: `placeholderLoading` / `placeholderFailure` (view-builder and image variants); type-state generics; placeholder replacement preserves style/cornerRadius.
-- Sample app (`ImageIOSample`/`ImageIOSampleUI`) with local + remote sections, 9 canvas previews, plus an injected-renderer preview.
+- Sample app (`OneImageSample`/`OneImageSampleUI`) with local + remote sections, 9 canvas previews, plus an injected-renderer preview.
 - Tests: 2 Core tests + 12 View UI/render tests (Swift Testing + `ImageRenderer`) — 14 total, all passing.
 - Git: initial release committed and pushed to `origin/main` (`4022a59`).
 

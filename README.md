@@ -1,6 +1,6 @@
 <div align="center">
 
-# ImageIO
+# OneImage
 
 ### One API for every image — local or remote.
 
@@ -16,9 +16,9 @@ A dependency-free SwiftUI image library that lets you describe *any* image with 
 
 ---
 
-## Why ImageIO?
+## Why OneImage?
 
-SwiftUI gives you one way to show local images, another for system symbols, and yet another for remote ones — and they all behave differently. ImageIO unifies them into **one enum, one view, one set of modifiers**:
+SwiftUI gives you one way to show local images, another for system symbols, and yet another for remote ones — and they all behave differently. OneImage unifies them into **one enum, one view, one set of modifiers**:
 
 ```swift
 ImageView(.local(.system("star.fill")))                    // SF Symbol
@@ -45,22 +45,22 @@ Add it via Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Vinsi/ImageIO.git", from: "1.0.0")
+    .package(url: "https://github.com/Vinsi/OneImage.git", from: "1.0.0")
 ]
 ```
 
 Then add the products you need:
 
 ```swift
-.product(name: "Core", package: "ImageIO"),
-.product(name: "View", package: "ImageIO"),
+.product(name: "Core", package: "OneImage"),
+.product(name: "View", package: "OneImage"),
 ```
 
 | Product | Description |
 | --- | --- |
 | `Core` | Platform-independent image reference model |
 | `View` | SwiftUI `ImageView` with placeholders, styling, and renderer injection |
-| `ImageIOSampleUI` / `ImageIOSample` | Sample app with canvas previews |
+| `OneImageSampleUI` / `OneImageSample` | Sample app with canvas previews |
 
 ## Quick Start
 
@@ -150,10 +150,10 @@ The renderer receives the applied `ImageStyle` so it can forward `.resizable()`,
 ## Sample app
 
 ```sh
-swift run ImageIOSample
+swift run OneImageSample
 ```
 
-For live previews, open the package in Xcode, select the `ImageIOSampleUI` scheme, and open `Previews.swift` or `ContentView.swift` in the canvas.
+For live previews, open the package in Xcode, select the `OneImageSampleUI` scheme, and open `Previews.swift` or `ContentView.swift` in the canvas.
 
 ## Requirements
 
@@ -162,4 +162,4 @@ For live previews, open the package in Xcode, select the `ImageIOSampleUI` schem
 
 ## License
 
-ImageIO is available under the MIT license. See [LICENSE](LICENSE).
+OneImage is available under the MIT license. See [LICENSE](LICENSE).

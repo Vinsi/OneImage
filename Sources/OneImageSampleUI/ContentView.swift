@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  ImageIO
+//  OneImage
 //
 //  Created by Vinsi on 23.8.26.
 //
@@ -56,7 +56,7 @@ public struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("ImageIO Sample")
+            .navigationTitle("OneImage Sample")
         }
     }
 

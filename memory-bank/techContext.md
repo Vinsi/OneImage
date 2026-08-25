@@ -1,4 +1,4 @@
-# Tech Context: ImageIO
+# Tech Context: OneImage
 
 ## Stack
 - **Language**: Swift 6.2 (`swift-tools-version: 6.2` in `Package.swift`)
@@ -13,14 +13,14 @@
 | --- | --- | --- |
 | `Core` | library | `Core` |
 | `View` | library | `View` (depends on `Core`) |
-| `ImageIOSampleUI` | library | `ImageIOSampleUI` (depends on `View`) |
-| `ImageIOSample` | executable | `ImageIOSample` (depends on `ImageIOSampleUI`; embeds `Info.plist` via linker sectcreate flags) |
+| `OneImageSampleUI` | library | `OneImageSampleUI` (depends on `View`) |
+| `OneImageSample` | executable | `OneImageSample` (depends on `OneImageSampleUI`; embeds `Info.plist` via linker sectcreate flags) |
 
 ## Source layout
 - `Sources/Core/ImageReference.swift` — model enum
 - `Sources/View/` — `ImageView.swift`, `ImageConfiguration.swift`, `ImageStyle.swift`, `Image+Style.swift`, `RemoteImageRenderer.swift`, `AsyncImageRenderer.swift`, `ImagePlaceholder.swift`, `ImageReference+SwiftUI.swift`, `ImageView+Modifiers.swift`, `ImageView+Placeholder.swift`
-- `Sources/ImageIOSampleUI/` — `ContentView.swift`, `Previews.swift`
-- `Sources/ImageIOSample/` — `ImageIOSampleApp.swift`, `Info.plist`
+- `Sources/OneImageSampleUI/` — `ContentView.swift`, `Previews.swift`
+- `Sources/OneImageSample/` — `OneImageSampleApp.swift`, `Info.plist`
 
 ## Tests
 - Framework: **Swift Testing** (`import Testing`), not XCTest
@@ -32,12 +32,12 @@
 ```sh
 swift build                 # build all targets
 swift test                  # run CoreTests + ViewUITests
-swift run ImageIOSample     # run the sample app
+swift run OneImageSample     # run the sample app
 ```
-Previews: open package in Xcode, scheme `ImageIOSampleUI`, open `ContentView.swift` or `Previews.swift` in canvas.
+Previews: open package in Xcode, scheme `OneImageSampleUI`, open `ContentView.swift` or `Previews.swift` in canvas.
 
 ## Git state (at last memory-bank update)
-- Remote: `https://github.com/Vinsi/ImageIO.git` (`origin`)
+- Remote: `https://github.com/Vinsi/OneImage.git` (`origin`)
 - Branch: `main` (tracks `origin/main`)
-- Latest commit: `4022a59` "Initial release: ImageIO SwiftUI image library"
+- Latest commit: `4022a59` "Initial release: OneImage SwiftUI image library"
 - Uncommitted: the Kingfisher-decoupling refactor (renderer injection) in the working tree
