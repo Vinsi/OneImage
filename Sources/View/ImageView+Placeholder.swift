@@ -15,9 +15,11 @@ extension ImageView {
     ) -> ImageView<NewLoading, NewFailure> {
         ImageView<NewLoading, NewFailure>(
             configuration: .init(
+                cornerRadius: configuration.cornerRadius,
                 loadingPlaceHolder: loadingPlaceHolder,
                 failurePlaceHolder: failurePlaceHolder,
-                imageReference: configuration.imageReference
+                imageReference: configuration.imageReference,
+                style: configuration.style
             )
         )
     }

@@ -92,3 +92,37 @@ private struct PreviewRow<Content: View>: View {
             .resizable()
     )
 }
+
+private struct StyledAsyncRenderer: RemoteImageRenderer {
+    @MainActor
+    func makeRemoteImage<Loading: View, Failure: View>(
+        url: URL,
+        loading: ImagePlaceholder<Loading>,
+        failure: ImagePlaceholder<Failure>,
+        style: ImageStyle
+    ) -> any View {
+        AsyncImage(url: url) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case .success(let image):
+                image
+                    .applying(style)
+                    .saturation(0.2)
+            case .failure:
+                Image(systemName: "wifi.exclamationmark")
+            @unknown default:
+                failure
+            }
+        }
+    }
+}
+
+#Preview("Injected Remote Renderer") {
+    PreviewRow(
+        title: ".environment(\\.remoteImageRenderer, ...)",
+        content: ImageView(.remote(.urlString("https://picsum.photos/200/200")))
+            .resizable()
+            .environment(\.remoteImageRenderer, StyledAsyncRenderer())
+    )
+}

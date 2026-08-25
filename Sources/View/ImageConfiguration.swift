@@ -14,13 +14,5 @@ struct ImageConfiguration<Loading: View, Failure: View> {
     var loadingPlaceHolder: ImagePlaceholder<Loading>
     var failurePlaceHolder: ImagePlaceholder<Failure>
     var imageReference: ImageReference
-    var resizeConfiguration: ResizeConfiguration?
-    var renderingMode: Image.TemplateRenderingMode?
-    var interpolation: Image.Interpolation?
-    var isAntialiased: Bool?
-
-    struct ResizeConfiguration {
-        let capInsets: EdgeInsets
-        let resizingMode: Image.ResizingMode
-    }
+    var style: ImageStyle = ImageStyle()
 }

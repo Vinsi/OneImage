@@ -6,11 +6,11 @@
 //
 
 import Core
-import Kingfisher
 import SwiftUI
 
 public struct ImageView<Loading: View, Failure: View>: View {
     let configuration: ImageConfiguration<Loading, Failure>
+    @Environment(\.remoteImageRenderer) private var remoteImageRenderer
 
     init(configuration: ImageConfiguration<Loading, Failure>) {
         self.configuration = configuration
@@ -36,40 +36,18 @@ public struct ImageView<Loading: View, Failure: View>: View {
         }
     }
 
-    @ViewBuilder
-    private func local(
-        _ resource: ImageReference.LocalSource
-    ) -> some View {
-        configuredImage(resource.imageView)
+    private func local(_ resource: ImageReference.LocalSource) -> some View {
+        resource.imageView.applying(configuration.style)
     }
 
-    @ViewBuilder
-    private func configuredImage<R: RenderConfigurable>(
-        _ image: R
-    ) -> some View {
-        let rendered =
-            image
-            .optionalRenderingMode(configuration.renderingMode)
-            .optionalInterpolation(configuration.interpolation)
-            .optionalAntialiased(configuration.isAntialiased)
-        if let resize = configuration.resizeConfiguration {
-            rendered.resizable(
-                capInsets: resize.capInsets,
-                resizingMode: resize.resizingMode
+    private func remote(_ url: URL) -> AnyView {
+        AnyView(
+            remoteImageRenderer.makeRemoteImage(
+                url: url,
+                loading: configuration.loadingPlaceHolder,
+                failure: configuration.failurePlaceHolder,
+                style: configuration.style
             )
-        } else {
-            rendered
-        }
-    }
-
-    private func remote(_ url: URL) -> some View {
-        configuredImage(
-            KFImage(url)
-                .placeholder { configuration.loadingPlaceHolder }
-                .onFailureView { configuration.failurePlaceHolder }
-                .fade(duration: 0.25)
-                .cacheOriginalImage(true)
-                .cancelOnDisappear(true)
         )
     }
 

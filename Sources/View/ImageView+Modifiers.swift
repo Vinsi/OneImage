@@ -19,7 +19,7 @@ extension ImageView {
         resizingMode: Image.ResizingMode = .stretch
     ) -> Self {
         with {
-            $0.resizeConfiguration = .init(
+            $0.style.resize = .init(
                 capInsets: capInsets,
                 resizingMode: resizingMode
             )
@@ -30,7 +30,7 @@ extension ImageView {
         _ renderingMode: Image.TemplateRenderingMode?
     ) -> Self {
         with {
-            $0.renderingMode = renderingMode
+            $0.style.renderingMode = renderingMode
         }
     }
 
@@ -38,7 +38,7 @@ extension ImageView {
         _ interpolation: Image.Interpolation
     ) -> Self {
         with {
-            $0.interpolation = interpolation
+            $0.style.interpolation = interpolation
         }
     }
 
@@ -46,7 +46,7 @@ extension ImageView {
         _ isAntialiased: Bool
     ) -> Self {
         with {
-            $0.isAntialiased = isAntialiased
+            $0.style.isAntialiased = isAntialiased
         }
     }
 }
