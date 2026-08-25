@@ -90,6 +90,17 @@ ImageReference.remote(.urlString("https://example.com/a.png"))
 ImageReference.local(.system("star.fill"))
 ImageReference.local(.asset("logo"))                     // bundle defaults to .main
 ImageReference.local(.asset("logo", bundle: someBundle))
+ImageReference.local(.resource(.bitcoin))                // type-safe asset catalog handle
+```
+
+![bitcoin asset rendered with OneImage](Examples/OneImageDemo/OneImageDemo/Assets.xcassets/bitcoin.imageset/icon-like-saving-bitcoin-svgrepo-com.svg)
+
+The SVG above is the `bitcoin` asset from the demo app's own asset catalog, rendered with a single line:
+
+```swift
+ImageView(.local(.resource(.bitcoin)))
+    .resizable()
+    .frame(width: 64, height: 64)
 ```
 
 ## Rendering

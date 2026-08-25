@@ -16,6 +16,11 @@ struct ContentView: View {
                             .resizable()
                             .frame(width: 64, height: 64)
                     }
+                    row(title: "Asset catalog (ImageResource)") {
+                        ImageView(.local(.resource(.bitcoin)))
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                    }
                     row(title: "SF Symbol") {
                         ImageView(.local(.system("star.fill")))
                             .resizable()
