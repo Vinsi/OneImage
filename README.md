@@ -80,6 +80,8 @@ ImageView(.remote(.urlString("https://picsum.photos/200")))
     .frame(width: 200, height: 200)
 ```
 
+![OneImage usage — local assets, SF Symbols, and remote images in a List](Examples/OneImageDemo/oneimage.png)
+
 ## Describing an image
 
 `ImageReference` is the single value you pass around — it carries no rendering knowledge, only *what* to show:
