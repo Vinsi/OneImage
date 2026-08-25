@@ -18,11 +18,11 @@
 
 /* Begin PBXFileReference section */
 		0B3BBE310BB8BAF9E6E52299 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0E99034C506B10B4EBAB21FA /* OneImage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OneImage; path = ../..; sourceTree = SOURCE_ROOT; };
 		5AA727CE91656E4471D6589C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93F08DDF9DF9B8CF778C7E85 /* KingfisherRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherRenderer.swift; sourceTree = "<group>"; };
 		B62B39BDD186499DC8287809 /* OneImageDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneImageDemoApp.swift; sourceTree = "<group>"; };
 		DD64EA73F7D669CB7E41C153 /* OneImageDemo.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OneImageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DF2B0B1544CF3160D1DDCA32 /* ImageIO */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ImageIO; path = ../..; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +42,7 @@
 		086663550AFC14F1E77B9628 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				DF2B0B1544CF3160D1DDCA32 /* ImageIO */,
+				0E99034C506B10B4EBAB21FA /* OneImage */,
 			);
 			name = Packages;
 			sourceTree = SOURCE_ROOT;
