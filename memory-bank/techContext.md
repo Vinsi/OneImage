@@ -36,6 +36,11 @@ swift run OneImageSample     # run the sample app
 ```
 Previews: open package in Xcode, scheme `OneImageSampleUI`, open `ContentView.swift` or `Previews.swift` in canvas.
 
+## CI (GitHub Actions)
+`.github/workflows/ci.yml` runs on push/PR to `main`:
+- `macos-15` job: `swift format lint --recursive Sources Tests`, `swift build`, `swift test`
+- `macos-15` job: `xcodebuild build -scheme OneImage-Package -destination 'generic/platform=iOS Simulator'` (validates iOS compilation)
+
 ## Git state (at last memory-bank update)
 - Remote: `https://github.com/Vinsi/OneImage.git` (`origin`)
 - Branch: `main` (tracks `origin/main`)

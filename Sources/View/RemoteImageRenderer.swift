@@ -21,8 +21,8 @@ private struct RemoteImageRendererKey: EnvironmentKey {
     static let defaultValue: any RemoteImageRenderer = AsyncImageRenderer()
 }
 
-public extension EnvironmentValues {
-    var remoteImageRenderer: any RemoteImageRenderer {
+extension EnvironmentValues {
+    public var remoteImageRenderer: any RemoteImageRenderer {
         get { self[RemoteImageRendererKey.self] }
         set { self[RemoteImageRendererKey.self] = newValue }
     }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-public extension Image {
-    func applying(_ style: ImageStyle) -> Image {
+extension Image {
+    public func applying(_ style: ImageStyle) -> Image {
         var image = self
         if let renderingMode = style.renderingMode {
             image = image.renderingMode(renderingMode)
