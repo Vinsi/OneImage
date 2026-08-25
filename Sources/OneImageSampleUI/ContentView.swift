@@ -53,6 +53,9 @@ public struct ContentView: View {
                             }
                             .resizable()
                             .frame(width: 64, height: 64)
+
+                        ImageView(.remote(.urlString("https://picsum.photos/200")))
+                            .placeholderLoading(image: .system("xmark.circle"))
                     }
                 }
             }

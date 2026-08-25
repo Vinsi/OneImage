@@ -116,6 +116,20 @@ struct RemoteImageRendererInjectionTests {
         #expect(box.style?.resize != nil)
     }
 
+    @Test func perViewRendererOverridesEnvironment() {
+        let envBox = RendererCallBox()
+        let viewBox = RendererCallBox()
+        let view = ImageView(.remote(.url(URL(string: "https://example.com/a.png")!)))
+            .remoteImageRenderer(FakeRenderer(box: viewBox))
+            .environment(\.remoteImageRenderer, FakeRenderer(box: envBox))
+
+        let renderer = ImageRenderer(content: view)
+        _ = renderer.cgImage
+
+        #expect(envBox.url == nil)
+        #expect(viewBox.url?.absoluteString == "https://example.com/a.png")
+    }
+
     @Test func asyncImageRendererBuildsRemoteView() {
         let view = AsyncImageRenderer().makeRemoteImage(
             url: URL(string: "https://picsum.photos/200")!,

@@ -139,6 +139,15 @@ ContentView()
     .environment(\.remoteImageRenderer, KingfisherRenderer())
 ```
 
+### Per-view override
+
+Need a different renderer for one specific image? Override it directly on the `ImageView` — it takes precedence over the environment:
+
+```swift
+ImageView(.remote(.urlString("https://example.com/hero.png")))
+    .remoteImageRenderer(MyLightweightRenderer())
+```
+
 The renderer receives the applied `ImageStyle` so it can forward `.resizable()`, `.renderingMode()`, etc. to its own view type. For loaders that expose an inner `Image` (like `AsyncImage`), just use `image.applying(style)`.
 
 ## Under the hood

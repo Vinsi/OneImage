@@ -49,4 +49,12 @@ extension ImageView {
             $0.style.isAntialiased = isAntialiased
         }
     }
+
+    public func remoteImageRenderer(
+        _ renderer: any RemoteImageRenderer
+    ) -> Self {
+        with {
+            $0.remoteImageRenderer = renderer
+        }
+    }
 }

@@ -19,7 +19,8 @@ extension ImageView {
                 loadingPlaceHolder: loadingPlaceHolder,
                 failurePlaceHolder: failurePlaceHolder,
                 imageReference: configuration.imageReference,
-                style: configuration.style
+                style: configuration.style,
+                remoteImageRenderer: configuration.remoteImageRenderer
             )
         )
     }

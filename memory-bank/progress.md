@@ -6,7 +6,7 @@
   - `ImageView` renders local (asset/resource/system) and remote (`url`/`urlString`) images.
   - **No third-party dependencies** — remote rendering via injectable `RemoteImageRenderer`, default `AsyncImageRenderer` (SwiftUI `AsyncImage`).
   - `ImageStyle` value type centralizes styling via `Image.applying(_:)` (local + default renderer auto-apply; no protocol conformance burden).
-  - Modifiers: `resizable`, `renderingMode`, `interpolation`, `antialiased`, `setCornerRadius`.
+  - Modifiers: `resizable`, `renderingMode`, `interpolation`, `antialiased`, `setCornerRadius`, `remoteImageRenderer` (per-view override, wins over environment).
   - Placeholders: `placeholderLoading` / `placeholderFailure` (view-builder and image variants); type-state generics; placeholder replacement preserves style/cornerRadius.
 - Sample app (`OneImageSample`/`OneImageSampleUI`) with local + remote sections, 9 canvas previews, plus an injected-renderer preview.
 - Tests: 2 Core tests + 12 View UI/render tests (Swift Testing + `ImageRenderer`) — 14 total, all passing.

@@ -41,8 +41,9 @@ public struct ImageView<Loading: View, Failure: View>: View {
     }
 
     private func remote(_ url: URL) -> AnyView {
-        AnyView(
-            remoteImageRenderer.makeRemoteImage(
+        let renderer = configuration.remoteImageRenderer ?? remoteImageRenderer
+        return AnyView(
+            renderer.makeRemoteImage(
                 url: url,
                 loading: configuration.loadingPlaceHolder,
                 failure: configuration.failurePlaceHolder,

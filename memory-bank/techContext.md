@@ -25,7 +25,7 @@
 ## Tests
 - Framework: **Swift Testing** (`import Testing`), not XCTest
 - `Tests/CoreTests/CoreTests.swift` — 2 tests (asset bundle default, remote equality)
-- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 12 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer is `AsyncImageRenderer`, injected renderer receives url/style, `AsyncImageRenderer` smoke test)
+- `Tests/ViewUITests/ImageViewRenderingTests.swift` — 13 tests: render assertions use SwiftUI `ImageRenderer` (local render, resizable sizing, invalid-URL failure fallback, config/style mutation, placeholder/style preservation, default renderer is `AsyncImageRenderer`, injected renderer receives url/style, per-view renderer overrides environment, `AsyncImageRenderer` smoke test)
 - Tests are `@MainActor` where they touch SwiftUI.
 
 ## Commands
