@@ -159,8 +159,16 @@ Because `RemoteView` is a generic parameter, you can mix renderers freely — a 
 
 ## Sample app
 
+Two ways to see it in action:
+
 ```sh
-swift run OneImageSample
+swift run OneImageSample      # macOS executable sample
+```
+
+Or open the full iOS demo project — a ready-to-run app with its own asset catalog, built-in remote loading, and a Kingfisher renderer:
+
+```sh
+open Examples/OneImageDemo/OneImageDemo.xcodeproj
 ```
 
 For live previews, open the package in Xcode, select the `OneImageSampleUI` scheme, and open `Previews.swift` or `ContentView.swift` in the canvas.

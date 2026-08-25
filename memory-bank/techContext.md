@@ -41,6 +41,10 @@ Previews: open package in Xcode, scheme `OneImageSampleUI`, open `ContentView.sw
 `.github/workflows/ci.yml` runs on push/PR to `main`:
 - `macos-15` job: `swift format lint --recursive Sources Tests`, `swift build`, `swift test`
 - `macos-15` job: `xcodebuild build -scheme OneImage-Package -destination 'generic/platform=iOS Simulator'` (validates iOS compilation)
+- `macos-15` job: builds `Examples/OneImageDemo` (`xcodebuild -project ... -scheme OneImageDemo`), the committed XcodeGen project
+
+## Example app
+`Examples/OneImageDemo/` is a full iOS app generated with XcodeGen (`project.yml`), referencing the OneImage package by local path (`../..`) plus Kingfisher. It demonstrates local assets from its own catalog, SF Symbols, the built-in `AsyncRemoteImage`, and a local `KingfisherRenderer`. The `.xcodeproj` is committed so it opens directly; regenerate with `xcodegen generate`.
 
 ## Git state (at last memory-bank update)
 - Remote: `https://github.com/Vinsi/OneImage.git` (`origin`)

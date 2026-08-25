@@ -44,3 +44,17 @@ jobs:
             -scheme OneImage-Package \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO
+
+  demo:
+    name: Build Sample App (iOS)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build OneImageDemo
+        run: |
+          xcodebuild build \
+            -project Examples/OneImageDemo/OneImageDemo.xcodeproj \
+            -scheme OneImageDemo \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
