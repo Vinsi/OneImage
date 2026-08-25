@@ -7,17 +7,32 @@ struct ContentView: View {
             List {
                 Section("Local — your assets") {
                     row(title: "Asset catalog") {
-                        ImageView(.local(.asset("sample")))
+                        ImageView(.local(.asset("SampleImage")))
                             .resizable()
                             .frame(width: 64, height: 64)
                     }
                     row(title: "Asset catalog (explicit bundle)") {
-                        ImageView(.local(.asset("sample", bundle: .main)))
+                        ImageView(.local(.asset("SampleImage", bundle: .main)))
                             .resizable()
                             .frame(width: 64, height: 64)
                     }
                     row(title: "Asset catalog (ImageResource)") {
                         ImageView(.local(.resource(.bitcoin)))
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                    }
+                    row(title: "Colored SVG — green") {
+                        ImageView(.local(.resource(.green)))
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                    }
+                    row(title: "Colored SVG — blue") {
+                        ImageView(.local(.resource(.blue)))
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                    }
+                    row(title: "Colored SVG — orange") {
+                        ImageView(.local(.resource(.orange)))
                             .resizable()
                             .frame(width: 64, height: 64)
                     }

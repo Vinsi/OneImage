@@ -1,0 +1,12 @@
+{
+  "images": [
+    {
+      "idiom": "universal",
+      "filename": "orange.svg"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
