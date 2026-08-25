@@ -1,13 +1,9 @@
 # Active Context: OneImage
 
 ## Current focus
-The working tree contains the **zero-type-erasure renderer design** (uncommitted): `ImageView<Loading, Failure, Renderer>` where `RemoteImageRenderer` has `associatedtype RemoteView: View`. There is **no `AnyView` and no `any View` anywhere** in the library.
-
-- `RemoteImageRenderer.swift` — protocol (associated `RemoteView`, `@MainActor` generic method) + `DefaultImageRenderer` marker (`RemoteView = Never`, never called).
-- `AsyncRemoteImage.swift` — built-in default, **generic** `AsyncRemoteImage<Loading, Failure>` storing typed placeholders; no erasure (its type legitimately depends on the placeholder generics). Replaced the old `AsyncImageRenderer`.
-- `ImageView.swift` — `Renderer` generic param, stored as `Renderer?`; `remote()` is a `@ViewBuilder` `if let renderer` that either calls the renderer (custom SDK) or builds `AsyncRemoteImage<Loading, Failure>` (default). Default init pins `Renderer == DefaultImageRenderer`.
-- Removed: `AnyView` entirely, `AsyncImageRenderer`, environment key, per-view renderer modifier.
-- Tests updated: default pins `DefaultImageRenderer`, fake renderer invoked synchronously, renderer survives placeholder replacement, built-in `AsyncRemoteImage` smoke test.
+Working tree changes (uncommitted):
+1. **CI fix** — GitHub `macos-15` runner ships Swift 6.1.0; `swift-tools-version` lowered 6.2 → 6.1 so the manifest resolves on CI (library targets still build on 6.1+; no 6.2-only features in use).
+2. **Kingfisher in the sample** — `Kingfisher` (>= 8.0.0) added to the package manifest and wired into `OneImageSampleUI` only; `KingfisherRenderer` (a `RemoteImageRenderer` returning `KFImage`) demonstrated in `ContentView` "Kingfisher" section and a preview. `Core`/`View` stay dependency-free.
 
 ## Open questions / decisions pending
 1. **`cornerRadius` dead code** — `setCornerRadius` populates `ImageConfiguration.cornerRadius` but nothing applies it in the view body. Decide: apply it (e.g. `.clipShape(RoundedRectangle(...))` or `.cornerRadius`), or remove the modifier/config field.

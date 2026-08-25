@@ -6,7 +6,7 @@
 
 A dependency-free SwiftUI image library that lets you describe *any* image with a single value and render it with consistent placeholders, failure handling, and styling — no matter where it comes from.
 
-[![Swift](https://img.shields.io/badge/Swift-6.2-FA7343?logo=swift&logoColor=white)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-6.1-FA7343?logo=swift&logoColor=white)](https://swift.org)
 [![iOS](https://img.shields.io/badge/iOS-17+-000000?logo=apple&logoColor=white)]()
 [![macOS](https://img.shields.io/badge/macOS-14+-000000?logo=apple&logoColor=white)]()
 [![SPM](https://img.shields.io/badge/SPM-Compatible-CB3837?logo=swift&logoColor=white)]()
@@ -111,7 +111,7 @@ ImageView(.remote(.urlString("")))                       // -> failure placehold
 
 ## Remote rendering — plug in any SDK
 
-`View` has **no third-party dependencies** and **zero type erasure** — no `AnyView`, no existential anywhere. `ImageView` is generic over a `RemoteImageRenderer`, so whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its concrete type intact.
+The library (`Core`/`View`) has **no third-party dependencies** and **zero type erasure** — no `AnyView`, no existential anywhere. `ImageView` is generic over a `RemoteImageRenderer`, so whatever your SDK produces (KFImage, WebImage, LazyImage) flows through the tree with its concrete type intact. (The sample app adds Kingfisher to demonstrate the injection — see `Sources/OneImageSampleUI/KingfisherRenderer.swift`.)
 
 Without a renderer, `ImageView` uses a built-in remote view (`AsyncRemoteImage<Loading, Failure>`, backed by SwiftUI's `AsyncImage`) that keeps your typed placeholders and style:
 
@@ -167,7 +167,7 @@ For live previews, open the package in Xcode, select the `OneImageSampleUI` sche
 
 ## Requirements
 
-- Swift 6.2+
+- Swift 6.1+
 - iOS 17+ / macOS 14+
 
 ## License

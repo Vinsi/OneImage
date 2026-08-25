@@ -10,9 +10,9 @@ A SwiftUI image loading library for local and remote images, distributed as a Sw
 - Ship as reusable SPM products (`Core`, `View`) plus a sample app (`OneImageSample`, `OneImageSampleUI`).
 
 ## Requirements
-- Swift 6.2+
+- Swift 6.1+
 - iOS 17+ / macOS 14+
-- Kingfisher (dependency for remote image loading)
+- Kingfisher (sample app only — the library itself has no third-party dependencies)
 
 ## Out of scope (current)
 - Video / animated image handling

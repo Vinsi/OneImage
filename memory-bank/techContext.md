@@ -1,19 +1,20 @@
 # Tech Context: OneImage
 
 ## Stack
-- **Language**: Swift 6.2 (`swift-tools-version: 6.2` in `Package.swift`)
+- **Language**: Swift 6.1 (`swift-tools-version: 6.1` in `Package.swift`) — set to 6.1 so the GitHub Actions `macos-15` runner (Swift 6.1.0) can build it
 - **Platforms**: iOS 17+, macOS 14+
 - **Package manager**: Swift Package Manager
-- **Dependencies**: none (remote rendering is injectable; default uses SwiftUI `AsyncImage`)
+- **Dependencies (library)**: none (remote rendering is pluggable; default uses SwiftUI `AsyncImage`)
+- **Dependencies (sample only)**: `Kingfisher` >= 8.0.0 — wired into `OneImageSampleUI` to demonstrate a real third-party renderer (`KingfisherRenderer`); the `Core`/`View` library products stay dependency-free
 - **Formatting**: `.swift-format` config present at package root
 - **License**: MIT
 
 ## Products (Package.swift)
 | Product | Type | Targets |
 | --- | --- | --- |
-| `Core` | library | `Core` |
+| `Core` | library | `Core` (no deps) |
 | `View` | library | `View` (depends on `Core`) |
-| `OneImageSampleUI` | library | `OneImageSampleUI` (depends on `View`) |
+| `OneImageSampleUI` | library | `OneImageSampleUI` (depends on `View`, `Kingfisher`) |
 | `OneImageSample` | executable | `OneImageSample` (depends on `OneImageSampleUI`; embeds `Info.plist` via linker sectcreate flags) |
 
 ## Source layout
@@ -45,4 +46,4 @@ Previews: open package in Xcode, scheme `OneImageSampleUI`, open `ContentView.sw
 - Remote: `https://github.com/Vinsi/OneImage.git` (`origin`)
 - Branch: `main` (tracks `origin/main`)
 - Latest commit: `4022a59` "Initial release: OneImage SwiftUI image library"
-- Uncommitted: the generic renderer redesign (`ImageView<Loading, Failure, Renderer>`, no AnyView) in the working tree
+- Uncommitted: CI tools-version fix (6.2 → 6.1) and Kingfisher wired into the sample target (working tree)

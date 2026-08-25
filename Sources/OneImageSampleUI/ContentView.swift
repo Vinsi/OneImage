@@ -58,6 +58,18 @@ public struct ContentView: View {
                             .placeholderLoading(image: .system("xmark.circle"))
                     }
                 }
+
+                Section("Kingfisher") {
+                    row(title: "Injected Renderer") {
+                        ImageView(
+                            .remote(.urlString("https://picsum.photos/200")),
+                            renderer: KingfisherRenderer()
+                        )
+                        .placeholderLoading { ProgressView() }
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                    }
+                }
             }
             .navigationTitle("OneImage Sample")
         }

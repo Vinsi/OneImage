@@ -92,3 +92,15 @@ private struct PreviewRow<Content: View>: View {
             .resizable()
     )
 }
+
+#Preview("Kingfisher Renderer") {
+    PreviewRow(
+        title: "ImageView(..., renderer: KingfisherRenderer())",
+        content: ImageView(
+            .remote(.urlString("https://picsum.photos/200/200")),
+            renderer: KingfisherRenderer()
+        )
+        .placeholderLoading { ProgressView() }
+        .resizable()
+    )
+}

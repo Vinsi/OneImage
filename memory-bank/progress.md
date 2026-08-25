@@ -8,7 +8,7 @@
   - `ImageStyle` value type centralizes styling via `Image.applying(_:)` (local + built-in remote auto-apply; no protocol conformance burden).
   - Modifiers: `resizable`, `renderingMode`, `interpolation`, `antialiased`, `setCornerRadius`.
   - Placeholders: `placeholderLoading` / `placeholderFailure` (view-builder and image variants); type-state generics; placeholder replacement preserves style/cornerRadius and the renderer.
-- Sample app (`OneImageSample`/`OneImageSampleUI`) with local + remote sections and 9 canvas previews.
+- Sample app (`OneImageSample`/`OneImageSampleUI`) with local + remote sections and 9 canvas previews; `OneImageSampleUI` additionally demonstrates a real third-party renderer (`KingfisherRenderer`) — the library products stay dependency-free.
 - Tests: 2 Core tests + 13 View UI/render tests (Swift Testing + `ImageRenderer`) — 15 total, all passing.
 - CI: GitHub Actions (`.github/workflows/ci.yml`) — macOS build + tests + format lint, and iOS Simulator build.
 - Git: initial release committed and pushed to `origin/main` (`4022a59`); repo renamed to `Vinsi/OneImage`.
