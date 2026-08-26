@@ -41,25 +41,38 @@ public struct ImageView<Loading: View, Failure: View, Renderer: RemoteImageRende
     }
 
     private func local(_ resource: ImageReference.LocalSource) -> some View {
-        resource.imageView.applying(configuration.style)
+        tinted(resource.imageView.applying(configuration.style))
     }
 
     @ViewBuilder
     private func remote(_ url: URL) -> some View {
         if let renderer {
-            renderer.makeRemoteImage(
-                url: url,
-                loading: configuration.loadingPlaceHolder,
-                failure: configuration.failurePlaceHolder,
-                style: configuration.style
+            tinted(
+                renderer.makeRemoteImage(
+                    url: url,
+                    loading: configuration.loadingPlaceHolder,
+                    failure: configuration.failurePlaceHolder,
+                    style: configuration.style
+                )
             )
         } else {
-            AsyncRemoteImage(
-                url: url,
-                loading: configuration.loadingPlaceHolder,
-                failure: configuration.failurePlaceHolder,
-                style: configuration.style
+            tinted(
+                AsyncRemoteImage(
+                    url: url,
+                    loading: configuration.loadingPlaceHolder,
+                    failure: configuration.failurePlaceHolder,
+                    style: configuration.style
+                )
             )
+        }
+    }
+
+    @ViewBuilder
+    private func tinted<Content: View>(_ content: Content) -> some View {
+        if let foreColor = configuration.style.foreColor {
+            content.foregroundColor(foreColor)
+        } else {
+            content
         }
     }
 
@@ -83,6 +96,14 @@ extension ImageView where Loading == EmptyView, Failure == EmptyView {
             renderer: renderer
         )
     }
+
+    public init(_ local: ImageReference.LocalSource, renderer: Renderer) {
+        self.init(.local(local), renderer: renderer)
+    }
+
+    public init(_ remote: ImageReference.RemoteSource, renderer: Renderer) {
+        self.init(.remote(remote), renderer: renderer)
+    }
 }
 
 extension ImageView
@@ -93,6 +114,28 @@ where Renderer == DefaultImageRenderer, Loading == EmptyView, Failure == EmptyVi
                 loadingPlaceHolder: .none,
                 failurePlaceHolder: .none,
                 imageReference: ref
+            ),
+            renderer: nil
+        )
+    }
+
+    public init(_ local: ImageReference.LocalSource) {
+        self.init(
+            configuration: .init(
+                loadingPlaceHolder: .none,
+                failurePlaceHolder: .none,
+                imageReference: .local(local)
+            ),
+            renderer: nil
+        )
+    }
+
+    public init(_ remote: ImageReference.RemoteSource) {
+        self.init(
+            configuration: .init(
+                loadingPlaceHolder: .none,
+                failurePlaceHolder: .none,
+                imageReference: .remote(remote)
             ),
             renderer: nil
         )

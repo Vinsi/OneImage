@@ -7,18 +7,23 @@ struct ContentView: View {
             List {
                 Section("Local — your assets") {
                     row(title: "Asset catalog") {
-                        ImageView(.local(.asset("SampleImage")))
+                        ImageView(.local(.resource(.bitcoin)))
                             .resizable()
                             .frame(width: 64, height: 64)
                     }
                     row(title: "Asset catalog (explicit bundle)") {
-                        ImageView(.local(.asset("SampleImage", bundle: .main)))
+                        ImageView(.local(.system("arrow.left")))
                             .resizable()
-                            .frame(width: 64, height: 64)
+                            .renderingMode(.template)
+                            .foregroundStyle(.blue)
+                            .frame(width: 32, height: 32)
+                            .background(Color.blue.opacity(0.15))
                     }
                     row(title: "Asset catalog (ImageResource)") {
                         ImageView(.local(.resource(.bitcoin)))
                             .resizable()
+                            .renderingMode(.template)
+                            .foregroundStyle(.cyan)
                             .frame(width: 64, height: 64)
                     }
                     row(title: "Colored SVG — green") {
@@ -51,6 +56,16 @@ struct ContentView: View {
                                 Image(systemName: "exclamationmark.triangle")
                                     .foregroundStyle(.orange)
                             }
+                            .resizable()
+                            .frame(width: 64, height: 64)
+
+                    }
+                    row(title: "AsyncImage failed") {
+                        ImageView(.remote(.urlString("")))
+                            .placeholderLoading { ProgressView() }
+                            .placeholderFailure(
+                                image: .resource(.bitcoin)
+                            )
                             .resizable()
                             .frame(width: 64, height: 64)
                     }

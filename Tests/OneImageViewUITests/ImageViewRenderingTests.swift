@@ -1,6 +1,7 @@
 import SwiftUI
 import Testing
 
+@testable import OneImageCore
 @testable import OneImageView
 
 @MainActor
@@ -60,6 +61,19 @@ struct ImageViewRenderingTests {
         let view = ImageView(.local(.system("star"))).setCornerRadius(8)
 
         #expect(view.configuration.cornerRadius == 8)
+    }
+
+    @Test func foreColorModifierSetsConfiguration() {
+        let view = ImageView(.local(.system("star"))).foreColor(.red)
+
+        #expect(view.configuration.style.foreColor == .red)
+    }
+
+    @Test func asImageMapsLocalSourceToImage() {
+        let source = ImageReference.LocalSource.system("star")
+        let image = source.asImage
+
+        #expect(ImageRenderer(content: image).cgImage != nil)
     }
 
     @Test func styleSurvivesPlaceholderReplacement() {

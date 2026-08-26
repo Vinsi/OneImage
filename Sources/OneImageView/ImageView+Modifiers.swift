@@ -49,4 +49,12 @@ extension ImageView {
             $0.style.isAntialiased = isAntialiased
         }
     }
+
+    public func foreColor(
+        _ color: Color
+    ) -> Self {
+        with {
+            $0.style.foreColor = color
+        }
+    }
 }

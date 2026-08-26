@@ -120,6 +120,7 @@ ImageView(.remote(.urlString("")))                       // -> failure placehold
 - `.interpolation(_:)`
 - `.antialiased(_:)`
 - `.setCornerRadius(_:)`
+- `.foreColor(_:)`
 - `.placeholderLoading { ... }` / `.placeholderFailure { ... }`
 
 ## Remote rendering — plug in any SDK

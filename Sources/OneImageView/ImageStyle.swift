@@ -12,17 +12,20 @@ public struct ImageStyle: Sendable, Equatable {
     public var interpolation: Image.Interpolation?
     public var isAntialiased: Bool?
     public var resize: ResizeConfiguration?
+    public var foreColor: Color?
 
     public init(
         renderingMode: Image.TemplateRenderingMode? = nil,
         interpolation: Image.Interpolation? = nil,
         isAntialiased: Bool? = nil,
-        resize: ResizeConfiguration? = nil
+        resize: ResizeConfiguration? = nil,
+        foreColor: Color? = nil
     ) {
         self.renderingMode = renderingMode
         self.interpolation = interpolation
         self.isAntialiased = isAntialiased
         self.resize = resize
+        self.foreColor = foreColor
     }
 
     public struct ResizeConfiguration: Sendable, Equatable {
